@@ -61,7 +61,7 @@ func (s *server) index(w http.ResponseWriter, r *http.Request) {
 	code := r.URL.Query().Get("code")
 	if code != "" && codePattern.MatchString(code) {
 		w.Header().Set("X-Learn-Nonce", s.nonce(code))
-		fmt.Fprintf(w, "Hello from request-demo %s.\nYour nonce is in the X-Learn-Nonce response header. Read it with: curl -v \"https://%s/?code=%s\"\n", version, r.Host, code)
+		fmt.Fprintf(w, "Hello from request-demo %s.\nYour nonce is in the X-Learn-Nonce response header. Read it with curl -v and your code.\n", version)
 		return
 	}
 	fmt.Fprintf(w, "Hello from request-demo %s.\nAdd ?code=<your code from the lesson> to get your nonce header.\n", version)
@@ -97,9 +97,11 @@ func main() {
 		port = "8080"
 	}
 	srv := &http.Server{
-		Addr:              ":" + port,
-		Handler:           (&server{secret: []byte(secret)}).routes(),
+		Addr: ":" + port,
+		// 60 requests a minute per client (bursts of 20), 50 a second overall.
+		Handler:           protect(newLimiter(60, 20, 50), (&server{secret: []byte(secret)}).routes()),
 		ReadHeaderTimeout: 5 * time.Second,
+		MaxHeaderBytes:    16 << 10,
 		ReadTimeout:       10 * time.Second,
 		WriteTimeout:      10 * time.Second,
 	}
