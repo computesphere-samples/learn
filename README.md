@@ -27,6 +27,12 @@ docker run --rm -p 8080:8080 quay.io/computesphere/learn-hello-web:1.0.0
 curl localhost:8080/healthz
 ```
 
+## Starter apps
+
+| Directory | What it is |
+|---|---|
+| `labs/vibe-starter` | A small Node tasks app for Path 4, *Vibe coding to production*. It has deliberate problems for the lessons, so don't use it as a template |
+
 ## Releasing
 
 Images are built by Quay when a version tag (`1.0.0`, `1.1.0`, …) is pushed. Pushes to `main` build nothing. To release a change, bump the lab's `VERSION` file, merge, then tag `main` with the new version. Lessons pin exact versions, so a published tag is never moved.

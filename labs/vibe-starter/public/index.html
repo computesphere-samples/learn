@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tasks</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 36rem; margin: 2rem auto; padding: 0 1rem; color: #1e293b; }
+    h1 { font-size: 1.5rem; }
+    form { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    input[type="text"] { flex: 1; min-width: 10rem; }
+    input, button { font: inherit; padding: 0.4rem 0.6rem; }
+    ul { list-style: none; padding: 0; }
+    li { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0; }
+    .meta { color: #64748b; font-size: 0.85rem; }
+    .overdue { color: #b91c1c; }
+    .error { color: #b91c1c; }
+  </style>
+</head>
+<body>
+  <h1>Tasks</h1>
+  <form id="add">
+    <input type="text" id="title" placeholder="What needs doing?" required>
+    <input type="date" id="due">
+    <button type="submit">Add</button>
+  </form>
+  <p id="error" class="error" hidden></p>
+  <ul id="list"></ul>
+
+  <script>
+    const list = document.getElementById("list");
+    const error = document.getElementById("error");
+
+    function showError(message) {
+      error.textContent = message;
+      error.hidden = !message;
+    }
+
+    async function load() {
+      const res = await fetch("/api/tasks");
+      const tasks = await res.json();
+      list.replaceChildren();
+      for (const task of tasks) {
+        const li = document.createElement("li");
+        const text = document.createElement("div");
+        const title = document.createElement("div");
+        title.textContent = task.title;
+        const meta = document.createElement("div");
+        meta.className = "meta" + (task.overdue ? " overdue" : "");
+        meta.textContent = (task.due ? "Due " + task.due : "No due date") +
+          (task.overdue ? " (overdue)" : "") + " - " + task.owner;
+        text.append(title, meta);
+
+        const del = document.createElement("button");
+        del.textContent = "Delete";
+        del.addEventListener("click", async () => {
+          await fetch("/api/tasks/" + task.id, { method: "DELETE" });
+          load();
+        });
+
+        li.append(text, del);
+        list.append(li);
+      }
+    }
+
+    document.getElementById("add").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const res = await fetch("/api/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: document.getElementById("title").value,
+          due: document.getElementById("due").value || null,
+        }),
+      });
+      if (!res.ok) {
+        const body = await res.json();
+        showError((body.errors || ["Something went wrong"]).join(", "));
+        return;
+      }
+      showError("");
+      event.target.reset();
+      load();
+    });
+
+    load();
+  </script>
+</body>
+</html>
