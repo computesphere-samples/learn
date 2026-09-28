@@ -12,6 +12,8 @@ Tiny Go programs on a distroless, non-root base. Each listens on port 8080.
 | `quay.io/computesphere/learn-hello-web-broken:1.0.0` | The same page, but `/healthz` returns 503. The bad release in the rollback lab | `labs/hello-web` (`Dockerfile.broken`) |
 | `quay.io/computesphere/learn-sample-api:1.0.0` | `GET /hello` returns the `GREETING` variable and whether `API_KEY` is set, never its value | `labs/sample-api` |
 
+| `quay.io/computesphere/learn-request-demo:1.1.0` | The service learners inspect in Cloud foundations: `?code=<your code>` adds an `X-Learn-Nonce` response header; `/verify` checks it. Run by ComputeSphere; needs `NONCE_SECRET` (32+ characters) | `labs/request-demo` |
+
 Deploy one:
 
 ```bash
