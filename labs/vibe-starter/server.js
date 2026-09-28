@@ -47,6 +47,33 @@ app.delete("/api/tasks/:id", (req, res) => {
   res.status(204).end();
 });
 
+function toCsv(rows) {
+  return rows
+    .map((row) =>
+      row
+        .map((value) => {
+          const cell = value == null ? "" : String(value);
+          if (/[",\n]/.test(cell)) {
+            return '"' + cell.replace(/"/g, '""') + '"';
+          }
+          return cell;
+        })
+        .join(",")
+    )
+    .join("\n");
+}
+
+app.get("/api/tasks/export.csv", (req, res) => {
+  const header = ["id", "title", "due", "done", "owner", "overdue"];
+  const rows = store
+    .all()
+    .map((t) => withStatus(t))
+    .map((t) => [t.id, t.title, t.due, t.done, t.owner, t.overdue]);
+  res.set("Content-Type", "text/csv; charset=utf-8");
+  res.set("Content-Disposition", 'attachment; filename="tasks.csv"');
+  res.send(toCsv([header, ...rows]) + "\n");
+});
+
 app.get("/api/admin/stats", (req, res) => {
   if (req.get("x-admin-key") !== ADMIN_KEY) {
     return res.status(401).json({ error: "unauthorized" });
@@ -56,6 +83,10 @@ app.get("/api/admin/stats", (req, res) => {
   res.json({ tasks: tasks.length, owners: owners.size });
 });
 
-app.listen(3000, "127.0.0.1", () => {
-  console.log("Tasks app listening on http://127.0.0.1:3000");
-});
+if (require.main === module) {
+  app.listen(3000, "127.0.0.1", () => {
+    console.log("Tasks app listening on http://127.0.0.1:3000");
+  });
+}
+
+module.exports = { app, toCsv };
