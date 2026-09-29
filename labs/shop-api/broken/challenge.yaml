@@ -1,0 +1,12 @@
+# The good release for challenge 6.C. challenge-setup.sh deploys this, sets
+# the SIGNING_KEY secret and the health check, then ships a bad release.
+version: "2"
+services:
+  - name: shop
+    type: web-service
+    image: quay.io/computesphere/learn-shop-api:1.0.0
+    port: 8080
+    health_check_path: /healthz
+    env_vars:
+      START_DELAY: "90"
+      SHOP_NAME: "Harbour Supply Co."
