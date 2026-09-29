@@ -1,0 +1,65 @@
+name: Publish lab images
+
+# Builds every lab image in labs/images.json for linux/amd64 (the platform
+# ComputeSphere runs) and pushes it to quay.io/computesphere/<repository>:<tag>
+# when a version tag (1.2.3) is pushed. Lessons pin exact versions, so a
+# published tag is never rebuilt: the job refuses to overwrite an existing tag.
+# Run it by hand with push=false to check every image still builds.
+on:
+  push:
+    tags: ["[0-9]+.[0-9]+.[0-9]+"]
+  workflow_dispatch:
+    inputs:
+      push:
+        description: "Push to Quay (needs a version tag checked out as the ref)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      images: ${{ steps.read.outputs.images }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: read
+        run: echo "images=$(jq -c '.images' labs/images.json)" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ${{ fromJson(needs.matrix.outputs.images) }}
+    env:
+      IMAGE: quay.io/computesphere/${{ matrix.image.repository }}:${{ github.ref_name }}
+      PUSH: ${{ github.event_name == 'push' || inputs.push }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Log in to Quay
+        if: env.PUSH == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_ROBOT_USERNAME }}
+          password: ${{ secrets.QUAY_ROBOT_TOKEN }}
+      - name: Refuse to overwrite a published tag
+        if: env.PUSH == 'true'
+        run: |
+          if docker buildx imagetools inspect "$IMAGE" >/dev/null 2>&1; then
+            echo "::error::$IMAGE already exists; published tags are immutable. Bump the version."
+            exit 1
+          fi
+      - uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.image.context }}
+          file: ${{ matrix.image.dockerfile }}
+          platforms: linux/amd64
+          push: ${{ env.PUSH == 'true' }}
+          tags: ${{ env.IMAGE }}
+          provenance: false
