@@ -11,8 +11,9 @@ Tiny Go programs on a distroless, non-root base. Each listens on port 8080.
 | `quay.io/computesphere/learn-hello-web:1.0.0` | Serves a page on `/` and `{"status":"ok"}` on `/healthz` | `labs/hello-web` |
 | `quay.io/computesphere/learn-hello-web-broken:1.0.0` | The same page, but `/healthz` returns 503. The bad release in the rollback lab | `labs/hello-web` (`Dockerfile.broken`) |
 | `quay.io/computesphere/learn-sample-api:1.0.0` | `GET /hello` returns the `GREETING` variable and whether `API_KEY` is set, never its value | `labs/sample-api` |
-
 | `quay.io/computesphere/learn-request-demo:1.1.0` | The service learners inspect in Cloud foundations: `?code=<your code>` adds an `X-Learn-Nonce` response header; `/verify` checks it. Run by ComputeSphere; needs `NONCE_SECRET` (32+ characters) | `labs/request-demo` |
+| `quay.io/computesphere/learn-shop-api:1.0.0` | The shop API for Path 6, *Operate*: `/products`, `/orders`, JSON logs, and switches for a slow start, a missing secret, memory, CPU and an error rate. Needs `SIGNING_KEY` | `labs/shop-api` |
+| `quay.io/computesphere/learn-webhook-inbox:1.0.0` | Receives webhooks at `POST /hooks/<token>` and shows the last 20 at `/<token>` (page or JSON), in memory | `labs/webhook-inbox` |
 
 Deploy one:
 

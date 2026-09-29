@@ -1,0 +1,10 @@
+# Broken deploy 4 of 5 (lesson 6.5.3). Deploy with:
+#   csph deploy --file case-4.yaml
+version: "2"
+services:
+  - name: shop-case-4
+    type: web-service
+    image: quay.io/computesphere/learn-shop-api:1.0.9
+    port: 8080
+    env_vars:
+      REQUIRE_SIGNING_KEY: "false"
