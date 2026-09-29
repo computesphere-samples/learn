@@ -4,5 +4,5 @@ version: "2"
 services:
   - name: shop-case-2
     type: web-service
-    image: quay.io/computesphere/learn-shop-api:1.0.0
+    image: quay.io/computesphere/learn-shop-api:1.4.0
     port: 8080

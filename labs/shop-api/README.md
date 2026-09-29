@@ -2,7 +2,7 @@
 
 A small shop API for Path 6, *Operate your application*. It works like a normal service, and a few environment variables make it misbehave on purpose, so you can practise reading logs, metrics and health checks on something that's really failing.
 
-Image: `quay.io/computesphere/learn-shop-api:1.0.0`. Listens on port 8080.
+Image: `quay.io/computesphere/learn-shop-api:1.4.0`. Listens on port 8080.
 
 ## Endpoints
 
@@ -48,7 +48,7 @@ One JSON object per line on stdout. Each request logs `level`, `msg`, `request_i
 ## Run it locally
 
 ```bash
-docker run --rm -p 8080:8080 -e SIGNING_KEY=dev quay.io/computesphere/learn-shop-api:1.0.0
+docker run --rm -p 8080:8080 -e SIGNING_KEY=dev quay.io/computesphere/learn-shop-api:1.4.0
 curl localhost:8080/products
 curl -X POST localhost:8080/orders -d '{"product_id":"p-100","quantity":2}'
 ```
