@@ -32,6 +32,8 @@ curl localhost:8080/healthz
 | Directory | What it is |
 |---|---|
 | `labs/vibe-starter` | A small Node tasks app for Path 4, *Vibe coding to production*. It has deliberate problems for the lessons, so don't use it as a template |
+| `labs/local-api` | A tiny notes API in Node, no dependencies, for calling an API with curl (Path 2, lesson 2.2.4) |
+| `labs/migrations` | Two up/down migrations and a minimal runner on Node's built-in SQLite (Path 2, lesson 2.3.5) |
 
 ## Releasing
 
