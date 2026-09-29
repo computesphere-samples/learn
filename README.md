@@ -34,6 +34,11 @@ curl localhost:8080/healthz
 | `labs/vibe-starter` | A small Node tasks app for Path 4, *Vibe coding to production*. It has deliberate problems for the lessons, so don't use it as a template |
 | `labs/local-api` | A tiny notes API in Node, no dependencies, for calling an API with curl (Path 2, lesson 2.2.4) |
 | `labs/migrations` | Two up/down migrations and a minimal runner on Node's built-in SQLite (Path 2, lesson 2.3.5) |
+| `labs/containerize-node` | A tiny Express app with no Dockerfile: you write it (Path 3, *Containers*) |
+| `labs/containerize-python` | The same app in Flask with gunicorn, no Dockerfile (Path 3) |
+| `labs/containerize-go` | The same app in Go, standard library only, no Dockerfile (Path 3) |
+| `labs/bloated-app` | A Go app whose Dockerfile builds a far-too-big image on purpose (Path 3, lesson 3.4.5) |
+| `labs/compose-stack` | A Node web app with a local Compose stack (Postgres) and a deployable one (web + sample API) (Path 3, lesson 3.5.2 and lab 3.L2) |
 
 ## Releasing
 

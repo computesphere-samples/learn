@@ -1,0 +1,32 @@
+# Local stack for lesson 3.5.2: the web app plus a Postgres database.
+# Run it with: docker compose up --build
+services:
+  web:
+    build: ./app
+    ports:
+      - "3000:3000"
+    environment:
+      # "db" is the service name below. Compose gives every service a DNS name.
+      DATABASE_URL: postgres://app:demo-password@db:5432/app
+    depends_on:
+      db:
+        # Wait until the database passes its healthcheck, not just until it starts.
+        condition: service_healthy
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: demo-password # demo only; never commit a real password
+      POSTGRES_DB: app
+    volumes:
+      # A named volume, so the data survives `docker compose down` (but not `down -v`).
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d app"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  db-data:

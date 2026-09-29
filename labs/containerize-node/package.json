@@ -1,0 +1,16 @@
+{
+  "name": "containerize-node",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A tiny Node web app to containerize (ComputeSphere Learn, Path 3)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "5.2.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
