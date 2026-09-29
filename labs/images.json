@@ -1,0 +1,10 @@
+{
+  "_comment": "Lab images published to quay.io/computesphere by .github/workflows/publish-images.yaml when a version tag is pushed. Add a line here for every new lab image; create its public Quay repo first (see README, Releasing).",
+  "images": [
+    { "repository": "learn-hello-web", "context": "labs/hello-web", "dockerfile": "labs/hello-web/Dockerfile" },
+    { "repository": "learn-hello-web-broken", "context": "labs/hello-web", "dockerfile": "labs/hello-web/Dockerfile.broken" },
+    { "repository": "learn-sample-api", "context": "labs/sample-api", "dockerfile": "labs/sample-api/Dockerfile" },
+    { "repository": "learn-request-demo", "context": "labs/request-demo", "dockerfile": "labs/request-demo/Dockerfile" },
+    { "repository": "learn-compose-web", "context": "labs/compose-stack/app", "dockerfile": "labs/compose-stack/app/Dockerfile" }
+  ]
+}

@@ -42,4 +42,6 @@ curl localhost:8080/healthz
 
 ## Releasing
 
-Images are built by Quay when a version tag (`1.0.0`, `1.1.0`, …) is pushed. Pushes to `main` build nothing. To release a change, bump the lab's `VERSION` file, merge, then tag `main` with the new version. Lessons pin exact versions, so a published tag is never moved.
+Images are built by the **Publish lab images** workflow (`.github/workflows/publish-images.yaml`) when a version tag (`1.0.0`, `1.1.0`, …) is pushed: every image in `labs/images.json` is built for `linux/amd64` and pushed to `quay.io/computesphere/<repository>:<tag>` by the `computesphere+learn_samples` robot. Pushes to `main` build nothing. To release a change, bump the lab's `VERSION` file, merge, then tag `main` with the new version. Lessons pin exact versions, so a published tag is never moved: the workflow refuses to overwrite one.
+
+To add a new lab image: add it to `labs/images.json`, and create its public repository in the `computesphere` Quay org with write access for the robot, before the next tag.
