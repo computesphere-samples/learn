@@ -27,7 +27,7 @@ csph deployments delete <deployment-id>
 | 1 | The service's port is 3000; the app listens on 8080 | The app logs `listening` on 8080, but the URL doesn't answer | Port 8080 |
 | 2 | `SIGNING_KEY` is missing | A `fatal` line naming `SIGNING_KEY`; **Crash looping** | Add `SIGNING_KEY` as a secret, redeploy |
 | 3 | `CACHE_MB=900` on a 512 MB Flex spherelet | `warming the product cache`, then nothing; **Out of memory** | Remove `CACHE_MB`, or a bigger shape |
-| 4 | Tag `1.0.9` doesn't exist | Refused before anything starts | Tag `1.0.0` |
+| 4 | Tag `1.0.9` doesn't exist | Refused before anything starts | Tag `1.4.0` |
 | 5 | The health check is on `/health`, which answers 404 | The app runs, but **Unhealthy** | Endpoint Path `/healthz` |
 
 </details>

@@ -2,7 +2,7 @@
 
 Somewhere to send webhooks and read them back, for Path 6, lab 6.L3. It keeps the last 20 messages for each token, in memory only: a restart empties it.
 
-Image: `quay.io/computesphere/learn-webhook-inbox:1.0.0`. Listens on port 8080.
+Image: `quay.io/computesphere/learn-webhook-inbox:1.4.0`. Listens on port 8080.
 
 | Request | Response |
 | --- | --- |
@@ -19,7 +19,7 @@ For a JSON body, the page shows its `text`, `content` or `message` field as the 
 ## Deploy it
 
 ```bash
-csph deploy --image quay.io/computesphere/learn-webhook-inbox:1.0.0 --name webhook-inbox --port 8080
+csph deploy --image quay.io/computesphere/learn-webhook-inbox:1.4.0 --name webhook-inbox --port 8080
 ```
 
 Then add `https://<its URL>/hooks/<your token>` as a JSON webhook under Settings → Notifications, and open `https://<its URL>/<your token>`.
@@ -27,7 +27,7 @@ Then add `https://<its URL>/hooks/<your token>` as a JSON webhook under Settings
 ## Try it locally
 
 ```bash
-docker run --rm -p 8080:8080 quay.io/computesphere/learn-webhook-inbox:1.0.0
+docker run --rm -p 8080:8080 quay.io/computesphere/learn-webhook-inbox:1.4.0
 curl -X POST localhost:8080/hooks/my-team-7f3a -H 'Content-Type: application/json' -d '{"text":"Hello from curl"}'
 curl localhost:8080/my-team-7f3a?format=json
 ```

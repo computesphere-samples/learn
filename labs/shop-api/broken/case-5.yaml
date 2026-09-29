@@ -4,7 +4,7 @@ version: "2"
 services:
   - name: shop-case-5
     type: web-service
-    image: quay.io/computesphere/learn-shop-api:1.0.0
+    image: quay.io/computesphere/learn-shop-api:1.4.0
     port: 8080
     health_check_path: /health
     env_vars:
