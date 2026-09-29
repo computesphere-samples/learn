@@ -1,0 +1,18 @@
+# The stack you deploy in lab 3.L2: the web app plus the sample API.
+# No build: lines here. A platform runs images, so push your own build of
+# ./app first and replace <your-registry> with where you pushed it.
+services:
+  web:
+    image: <your-registry>/compose-web:1.0.0
+    ports:
+      - "3000:3000"
+    environment:
+      # "api" is the service name below; the web app calls ${API_URL}/hello.
+      API_URL: http://api:8080
+
+  api:
+    image: quay.io/computesphere/learn-sample-api:1.0.0
+    ports:
+      - "8080:8080"
+    environment:
+      GREETING: Hello from the API
