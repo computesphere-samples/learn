@@ -35,6 +35,11 @@
       "repository": "learn-webhook-inbox",
       "context": "labs/webhook-inbox",
       "dockerfile": "labs/webhook-inbox/Dockerfile"
+    },
+    {
+      "repository": "learn-notes",
+      "context": "labs/notes",
+      "dockerfile": "labs/notes/Dockerfile"
     }
   ]
 }

@@ -14,6 +14,7 @@ Tiny Go programs on a distroless, non-root base. Each listens on port 8080.
 | `quay.io/computesphere/learn-request-demo:1.1.0` | The service learners inspect in Cloud foundations: `?code=<your code>` adds an `X-Learn-Nonce` response header; `/verify` checks it. Run by ComputeSphere; needs `NONCE_SECRET` (32+ characters) | `labs/request-demo` |
 | `quay.io/computesphere/learn-shop-api:1.4.0` | The shop API for Path 6, *Operate*: `/products`, `/orders`, JSON logs, and switches for a slow start, a missing secret, memory, CPU and an error rate. Needs `SIGNING_KEY` | `labs/shop-api` |
 | `quay.io/computesphere/learn-webhook-inbox:1.4.0` | Receives webhooks at `POST /hooks/<token>` and shows the last 20 at `/<token>` (page or JSON), in memory | `labs/webhook-inbox` |
+| `quay.io/computesphere/learn-notes:1.5.0` | Keeps one note in `/data/note.txt`: `POST /note` saves the body, `GET /note` returns it. The volume lab in Path 5 | `labs/notes` |
 
 Deploy one:
 
