@@ -42,6 +42,10 @@ curl localhost:8080/healthz
 | `labs/bloated-app` | A Go app whose Dockerfile builds a far-too-big image on purpose (Path 3, lesson 3.4.5) |
 | `labs/compose-stack` | A Node web app with a local Compose stack (Postgres) and a deployable one (web + sample API) (Path 3, lesson 3.5.2 and lab 3.L2) |
 
+## Agent kit
+
+[`agent-kit/`](agent-kit/) teaches coding agents to deploy to ComputeSphere well: a drop-in [`AGENTS.md`](agent-kit/AGENTS.md) for any repository, the same guidance as a [skill](agent-kit/SKILL.md), and the [MCP server setup](agent-kit/README.md#connect-the-mcp-server) for each agent. Its rules: secrets set as secrets, never in code; a project-scoped, expiring token; a real health check; listen on `0.0.0.0` and `PORT`; ask before changing anything live; read logs before guessing; roll back before hot-fixing.
+
 ## Releasing
 
 Images are built by the **Publish lab images** workflow (`.github/workflows/publish-images.yaml`) when a version tag (`1.0.0`, `1.1.0`, …) is pushed: every image in `labs/images.json` is built for `linux/amd64` and pushed to `quay.io/computesphere/<repository>:<tag>` by the `computesphere+learn_samples` robot. Pushes to `main` build nothing. To release a change, bump the lab's `VERSION` file, merge, then tag `main` with the new version. Lessons pin exact versions, so a published tag is never moved: the workflow refuses to overwrite one.
