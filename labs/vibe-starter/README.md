@@ -36,7 +36,6 @@ npm test
 | `public/index.html` | The tasks page |
 | `test/` | Tests, run with Node's built-in test runner |
 | `Dockerfile` | Container build |
-| `AGENTS.md` | Instructions a coding agent reads before deploying this app to ComputeSphere: the [agent kit](../../agent-kit/)'s rules plus a few lines about this app. Path 4 has you write instruction files of your own; compare yours with it |
 
 ## API
 
@@ -54,3 +53,5 @@ Requests identify the user with an `x-user` header. Without one, you are `demo`.
 The branch `vibe-starter/agent-export` holds a change an agent proposed: a CSV export of the task list. You review it in the lessons:
 
 https://github.com/computesphere-samples/learn/compare/main...vibe-starter/agent-export
+
+Path 4 has you write this app's agent instruction file yourself. Once you have, compare it with the ready-made one in the [agent kit](../../agent-kit/AGENTS.md).
