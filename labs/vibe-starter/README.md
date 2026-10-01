@@ -36,6 +36,7 @@ npm test
 | `public/index.html` | The tasks page |
 | `test/` | Tests, run with Node's built-in test runner |
 | `Dockerfile` | Container build |
+| `AGENTS.md` | Instructions a coding agent reads before deploying this app to ComputeSphere: the [agent kit](../../agent-kit/)'s rules plus a few lines about this app. Path 4 has you write instruction files of your own; compare yours with it |
 
 ## API
 
